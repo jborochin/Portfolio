@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #111118;
+  --color-bg-elevated: #1a1a24;
+  --color-bg-surface: #22222e;
+
+  --color-text-primary: #e4e4e7;
+  --color-text-secondary: #a1a1aa;
+  --color-text-heading: #fafafa;
+
+  --color-accent: #22d3ee;
+  --color-accent-hover: #06b6d4;
+  --color-accent-glow: rgba(34, 211, 238, 0.15);
+
+  --color-secondary: #a78bfa;
+  --color-border: rgba(255, 255, 255, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* Utility: gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Utility: glow effect */
+.glow-accent {
+  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 40px var(--color-accent-glow);
+}
+
+/* Animated gradient border for project cards */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-gradient {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+.card-border-gradient {
+  --card-accent: #22d3ee;
+  position: relative;
+  border-radius: 1rem;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--card-accent) 0%,
+    transparent 25%,
+    transparent 50%,
+    var(--card-accent) 75%,
+    transparent 100%
+  );
+  animation: rotate-gradient 4s linear infinite;
+  animation-play-state: paused;
+}
+
+.card-border-gradient:hover {
+  animation-play-state: running;
+}
+
+/* Auto-play on touch devices since no hover */
+@media (hover: none) {
+  .card-border-gradient {
+    animation-play-state: running;
+  }
+}
+
+.card-inner {
+  border-radius: calc(1rem - 1px);
+  background-color: var(--color-bg-elevated);
+  height: 100%;
+}
+
+.card-index {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.06;
+  color: var(--card-accent, var(--color-accent));
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+  font-family: var(--font-display);
+}
+
+.card-border-gradient:hover .card-index {
+  opacity: 0.15;
+}
+
+/* Featured card large decorative index */
+.card-index-featured {
+  font-size: 8rem;
+  opacity: 0.08;
+  transition: opacity 0.3s ease;
+}
+
+.card-border-gradient:hover .card-index-featured {
+  opacity: 0.2;
+}
+
+/* ── Terminal window styles ── */
+
+.terminal {
+  background-color: #0d1117;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.05), 0 0 30px rgba(34, 211, 238, 0.03);
+  transition: box-shadow 0.4s ease;
+}
+
+.terminal:hover {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.12), 0 0 50px rgba(34, 211, 238, 0.06);
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background-color: #161b22;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-body {
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+/* Scanline CRT overlay */
+.terminal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+  z-index: 1;
+}
+
+/* Typing animation */
+.terminal-typing-line {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typing 0.8s steps(var(--typing-steps, 20)) 0.3s forwards;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Blinking cursor */
+.terminal-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Dashed connector between terminals */
+.terminal-connector {
+  width: 1px;
+  height: 2.5rem;
+  margin: 0 auto;
+  border-left: 2px dashed rgba(34, 211, 238, 0.2);
+}
