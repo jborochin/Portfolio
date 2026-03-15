@@ -318,6 +318,7 @@ export default function Skills() {
   const isDragging = useRef(false);
   const lastPointer = useRef({ x: 0, y: 0 });
   const sphereRadius = useRef(200);
+  const isMobileRef = useRef(false);
 
   // Space background refs
   const starsRef = useRef<Star[]>([]);
@@ -333,7 +334,8 @@ export default function Skills() {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const minDim = Math.min(rect.width, rect.height);
-    sphereRadius.current = minDim * 0.36;
+    isMobileRef.current = rect.width < 640;
+    sphereRadius.current = minDim * (isMobileRef.current ? 0.42 : 0.36);
   }, []);
 
   // Pointer handlers
@@ -558,7 +560,10 @@ export default function Skills() {
                   const skill = skills[i];
                   const Icon = skill.icon;
                   const opacity = 0.2 + pos.depthNorm * 0.8;
-                  const iconSize = 20 + pos.depthNorm * 20;
+                  const mobile = isMobileRef.current;
+                  const iconSize = mobile
+                    ? 16 + pos.depthNorm * 14
+                    : 20 + pos.depthNorm * 20;
 
                   return (
                     <div
@@ -573,7 +578,7 @@ export default function Skills() {
                       <Icon size={iconSize} color={SKILL_COLORS[skill.name]} />
                       <span
                         className="font-mono text-text-secondary whitespace-nowrap"
-                        style={{ fontSize: `${8 + pos.depthNorm * 4}px` }}
+                        style={{ fontSize: `${mobile ? 7 + pos.depthNorm * 3 : 8 + pos.depthNorm * 4}px` }}
                       >
                         {skill.name}
                       </span>
