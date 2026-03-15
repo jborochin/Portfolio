@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 interface AnimatedTextProps {
   text: string;
   className?: string;
+  wordClassName?: string;
 }
 
 const container = {
@@ -21,7 +22,7 @@ const word = {
   },
 };
 
-export default function AnimatedText({ text, className = "" }: AnimatedTextProps) {
+export default function AnimatedText({ text, className = "", wordClassName = "" }: AnimatedTextProps) {
   const words = text.split(" ");
 
   return (
@@ -32,7 +33,7 @@ export default function AnimatedText({ text, className = "" }: AnimatedTextProps
       animate="visible"
     >
       {words.map((w, i) => (
-        <motion.span key={i} variants={word} className="inline-block">
+        <motion.span key={i} variants={word} className={`inline-block ${wordClassName}`}>
           {w}
         </motion.span>
       ))}

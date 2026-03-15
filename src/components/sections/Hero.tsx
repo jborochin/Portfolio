@@ -56,9 +56,7 @@ export default function Hero() {
           </p>
 
           <h1 className="font-display text-6xl font-bold tracking-tight md:text-8xl">
-            <span className="text-gradient">
-              <AnimatedText text="Jason Borochin" />
-            </span>
+            <AnimatedText text="Jason Borochin" wordClassName="text-gradient" />
           </h1>
 
           <motion.p

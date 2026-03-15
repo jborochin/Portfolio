@@ -50,16 +50,11 @@ body::before {
 
 /* Utility: gradient text */
 .text-gradient {
-  color: var(--color-accent);
   background: linear-gradient(135deg, var(--color-accent), var(--color-secondary));
   -webkit-background-clip: text;
   background-clip: text;
-}
-
-@supports (-webkit-background-clip: text) or (background-clip: text) {
-  .text-gradient {
-    -webkit-text-fill-color: transparent;
-  }
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Utility: glow effect */
