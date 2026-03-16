@@ -22,9 +22,10 @@ export const socials: Social[] = [
 ];
 
 export const stats: Stat[] = [
-  { value: "3.77", label: "GPA" },
   { value: "2", label: "Internships" },
   { value: "5+", label: "Projects" },
+  { value: "CompE", label: "Program" },
+  { value: "2027", label: "Graduation" },
 ];
 
 export const bio =
@@ -34,7 +35,6 @@ export const education = {
   degree: "B.S. Computer Engineering",
   minor: "Minor in Business",
   school: "University of Illinois at Urbana-Champaign",
-  gpa: "3.77 / 4.00",
   expected: "Expected May 2027",
   clubs: ["IEEE @ Illinois", "ACM @ UIUC"],
 };

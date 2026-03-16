@@ -224,3 +224,115 @@ body::before {
   margin: 0 auto;
   border-left: 2px dashed rgba(34, 211, 238, 0.2);
 }
+
+/* ── HUD Dossier styles ── */
+
+.hud-frame {
+  position: relative;
+  background:
+    radial-gradient(circle, rgba(34, 211, 238, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.hud-bracket {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hud-bracket::before,
+.hud-bracket::after {
+  content: "";
+  position: absolute;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.3);
+  animation: hud-bracket-pulse 3s ease-in-out infinite;
+}
+
+/* Horizontal arm */
+.hud-bracket::before {
+  width: 100%;
+  height: 2px;
+}
+
+/* Vertical arm */
+.hud-bracket::after {
+  width: 2px;
+  height: 100%;
+}
+
+/* Top-left */
+.hud-bracket-tl {
+  top: 0;
+  left: 0;
+}
+.hud-bracket-tl::before { top: 0; left: 0; }
+.hud-bracket-tl::after { top: 0; left: 0; }
+
+/* Top-right */
+.hud-bracket-tr {
+  top: 0;
+  right: 0;
+}
+.hud-bracket-tr::before { top: 0; right: 0; }
+.hud-bracket-tr::after { top: 0; right: 0; }
+
+/* Bottom-left */
+.hud-bracket-bl {
+  bottom: 0;
+  left: 0;
+}
+.hud-bracket-bl::before { bottom: 0; left: 0; }
+.hud-bracket-bl::after { bottom: 0; left: 0; }
+
+/* Bottom-right */
+.hud-bracket-br {
+  bottom: 0;
+  right: 0;
+}
+.hud-bracket-br::before { bottom: 0; right: 0; }
+.hud-bracket-br::after { bottom: 0; right: 0; }
+
+@keyframes hud-bracket-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(34, 211, 238, 0.1); }
+  50% { box-shadow: 0 0 14px rgba(34, 211, 238, 0.35); }
+}
+
+/* Scan line */
+.hud-scanline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 211, 238, 0.15) 20%,
+    rgba(34, 211, 238, 0.25) 50%,
+    rgba(34, 211, 238, 0.15) 80%,
+    transparent
+  );
+  filter: blur(0.5px);
+  z-index: 3;
+  pointer-events: none;
+  animation: hud-scan 4s linear infinite;
+}
+
+@keyframes hud-scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* Mobile: smaller brackets */
+@media (max-width: 640px) {
+  .hud-bracket {
+    width: 20px;
+    height: 20px;
+  }
+}
